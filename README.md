@@ -21,7 +21,7 @@ Right now there are 4 commands available:
 
 ## Demo
 
-![Colored Text Demo][]
+![Colored Text Demo](https://raw.githubusercontent.com/erincayaz/obsidian-colored-text/main/DemoPlugin.gif)
 
 ## Roadmap
 
