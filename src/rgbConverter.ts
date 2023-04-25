@@ -14,8 +14,6 @@ export class RGBConverter {
             hexStr += this.componentToHex(parseInt(rgbArr[i]));
         }
 
-        console.log(hexStr);
-
         return hexStr;
       }    
 }
