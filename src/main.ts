@@ -22,6 +22,9 @@ export default class ColoredFont extends Plugin {
           editorCallback: (editor: Editor, view: MarkdownView) => {
             var selection = editor.getSelection();
             editor.replaceSelection(`<font style="color:${this.curColor}">${selection}</font>`)
+
+            const curserEnd = editor.getCursor("to");
+            editor.setCursor(curserEnd.line, curserEnd.ch + 1);
           }
         });
         
