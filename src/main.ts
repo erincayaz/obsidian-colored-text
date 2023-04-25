@@ -73,7 +73,6 @@ export default class ColoredFont extends Plugin {
 
         // -------------------- Status Bar -------------------- //
         var statusBarColor = this.addStatusBarItem();
-        statusBarColor.innerHTML;
 
         const colorDivs: HTMLDivElement[] = [];
         for(let i = 0; i < 5; i++) {
