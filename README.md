@@ -29,3 +29,4 @@ Right now there are 4 commands available:
 - [ ] Selecting favorite colors in the settings and ability to select from those
 - [ ] Saving recent colors selected to also make it easier to select the color input
 - [ ] Latex/Mathjax Support will be added
+- [ ] Tests will be implemented
