@@ -4,15 +4,27 @@ import { RGBConverter } from "./rgbConverter";
 
 const DEFAULT_COLOR: string = '#000000';
 
+interface ColorsData {
+  colorArr: string[];
+}
+
+const DEFAULT_SETTINGS: Partial<ColorsData> = {
+  colorArr: ['#000000', '#000000', '#000000', '#000000', '#000000']
+};
+
 export default class ColoredFont extends Plugin {
     curColor: string;
     curIndex: number;
     prevIndex: number;
+    colorsData: ColorsData;
 
     async onload() {
+        // -------------------- Variables Init -------------------- //
         this.curColor = DEFAULT_COLOR;
         this.curIndex = 0;
         let rgbConverter = new RGBConverter();
+
+        await this.loadColorData();
 
         // -------------------- Command Implementation -------------------- // 
         this.addCommand({
@@ -36,6 +48,10 @@ export default class ColoredFont extends Plugin {
             new ColorModal(this.app, this.curColor, (result) => {
               this.curColor = result;
               colorDivs[this.curIndex].style.backgroundColor = result;
+              
+              // Save Color
+              this.colorsData.colorArr[this.curIndex] = result;
+              this.saveColorData();
             }).open();
           },
         })
@@ -77,11 +93,19 @@ export default class ColoredFont extends Plugin {
         const colorDivs: HTMLDivElement[] = [];
         for(let i = 0; i < 5; i++) {
           var colorText = statusBarColor.createEl('div', { cls: 'status-color' });
-          colorText.style.backgroundColor = DEFAULT_COLOR;
+          colorText.style.backgroundColor = this.colorsData.colorArr[i];
 
           colorDivs.push(colorText);
         }
 
         colorDivs[0].style.borderStyle = 'solid';
+    }
+
+    async loadColorData() {
+      this.colorsData = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    }
+
+    async saveColorData() {
+      await this.saveData(this.colorsData);
     }
 }
