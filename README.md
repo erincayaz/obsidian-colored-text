@@ -25,7 +25,7 @@ Right now there are 4 commands available:
 
 ## Roadmap
 
-- Saving the condition of status bar to use it after reopening the app
-- Selecting favorite colors in the settings and ability to select from those
-- Saving recent colors selected to also make it easier to select the color input
-
+- [x] Saving the condition of status bar to use it after reopening the app 
+- [ ] Selecting favorite colors in the settings and ability to select from those
+- [ ] Saving recent colors selected to also make it easier to select the color input
+- [ ] Latex/Mathjax Support will be added
