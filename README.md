@@ -14,10 +14,12 @@ This is a plugin for [Obsidian](https://obsidian.md/) for adding colored texts t
 ## Usage
 
 Right now there are 4 commands available:
-- Change color of selected text (Ctrl | Cmd + Shift + X)
-- Switch between slots, forward (Ctrl | Cmd + Shift + C)
-- Switch between slots, backwards (Ctrl | Cmd + Shift + Z)
-- Color input (Ctrl | Cmd + Shift + B)
+- Change color of selected text
+- Switch between slots, forward
+- Switch between slots, backwards
+- Color input
+
+I suggest using hotkeys for these commands as I designed this plugin with a keyboard-centric approach.
 
 ## Demo
 
@@ -26,6 +28,7 @@ Right now there are 4 commands available:
 ## Roadmap
 
 - [x] Saving the condition of status bar to use it after reopening the app 
+- [ ] Ability to change color using right click
 - [ ] Selecting favorite colors in the settings and ability to select from those
 - [ ] Saving recent colors selected to also make it easier to select the color input
 - [ ] Latex/Mathjax Support will be added
