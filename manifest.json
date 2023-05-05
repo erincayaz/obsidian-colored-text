@@ -4,7 +4,7 @@
 	"version": "0.1.0",
 	"minAppVersion": "0.15.0",
 	"description": "Color the selected texts.",
-	"author": "Erinc Ayaz <erincayaz852@gmail.com>",
+	"author": "Erinc Ayaz",
 	"authorUrl": "https://github.com/erincayaz",
 	"isDesktopOnly": true
 }

@@ -30,7 +30,7 @@ export default class ColoredFont extends Plugin {
         this.addCommand({
           id: 'add-text',
 			    name: 'Add the colored text',
-          hotkeys: [{ modifiers: ["Mod", "Shift"], key: "x" }],
+          hotkeys: [],
           editorCallback: (editor: Editor, view: MarkdownView) => {
             var selection = editor.getSelection();
             editor.replaceSelection(`<font style="color:${this.curColor}">${selection}</font>`)
@@ -43,7 +43,7 @@ export default class ColoredFont extends Plugin {
         this.addCommand({
           id: 'get-color-input',
           name: 'Get Color Input',
-          hotkeys: [{modifiers: ["Mod", "Shift"], key: "b"}],
+          hotkeys: [],
           callback: () => {
             new ColorModal(this.app, this.curColor, (result) => {
               this.curColor = result;
@@ -60,7 +60,7 @@ export default class ColoredFont extends Plugin {
         this.addCommand({
           id: 'change-color-forward',
           name: 'Change the Color Forward',
-          hotkeys: [{modifiers: ["Mod", "Shift"], key: "c"}],
+          hotkeys: [],
           callback: () => {
             this.prevIndex = this.curIndex;
             this.curIndex = this.curIndex == 4 ? 0 : this.curIndex + 1;
@@ -75,7 +75,7 @@ export default class ColoredFont extends Plugin {
         this.addCommand({
           id: 'change-color-backwards',
           name: 'Change the Color Backwards',
-          hotkeys: [{modifiers: ["Mod", "Shift"], key: "z"}],
+          hotkeys: [],
           callback: () => {
             this.prevIndex = this.curIndex;
             this.curIndex = this.curIndex == 0 ? 4 : this.curIndex - 1;
