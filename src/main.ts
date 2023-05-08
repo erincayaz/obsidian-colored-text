@@ -32,8 +32,8 @@ export default class ColoredFont extends Plugin {
 			    name: 'Add the colored text',
           hotkeys: [],
           editorCallback: (editor: Editor, view: MarkdownView) => {
-            var selection = editor.getSelection();
-            editor.replaceSelection(`<font style="color:${this.curColor}">${selection}</font>`)
+            let selection = editor.getSelection();
+            editor.replaceSelection(`<span style="color:${this.curColor}">${selection}</font>`)
 
             const curserEnd = editor.getCursor("to");
             editor.setCursor(curserEnd.line, curserEnd.ch + 1);
@@ -88,11 +88,11 @@ export default class ColoredFont extends Plugin {
         })
 
         // -------------------- Status Bar -------------------- //
-        var statusBarColor = this.addStatusBarItem();
+        let statusBarColor = this.addStatusBarItem();
 
         const colorDivs: HTMLDivElement[] = [];
         for(let i = 0; i < 5; i++) {
-          var colorText = statusBarColor.createEl('div', { cls: 'status-color' });
+          let colorText = statusBarColor.createEl('div', { cls: 'status-color' });
           colorText.style.backgroundColor = this.colorsData.colorArr[i];
 
           colorDivs.push(colorText);
