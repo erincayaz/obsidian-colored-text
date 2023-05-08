@@ -27,6 +27,7 @@ export default class ColoredFont extends Plugin {
         await this.loadColorData();
 
         // -------------------- Command Implementation -------------------- // 
+        // test //
         this.addCommand({
           id: 'add-text',
 			    name: 'Add the colored text',
