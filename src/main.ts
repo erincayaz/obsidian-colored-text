@@ -1,15 +1,19 @@
 import { App, Editor, MarkdownView, Menu, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { ColorModal } from "./modal";
 import { RGBConverter } from "./rgbConverter";
+import { SettingsTab } from './settings';
 
 const DEFAULT_COLOR: string = '#000000';
+const MAX_CELL_COUNT: number = 20;
 
 interface ColorsData {
   colorArr: string[];
+  colorCellCount: string;
 }
 
 const DEFAULT_SETTINGS: Partial<ColorsData> = {
-  colorArr: ['#000000', '#000000', '#000000', '#000000', '#000000']
+  colorArr: ['#000000', '#000000', '#000000', '#000000', '#000000'],
+  colorCellCount: "5"
 };
 
 export default class ColoredFont extends Plugin {
@@ -17,6 +21,7 @@ export default class ColoredFont extends Plugin {
     curIndex: number;
     prevIndex: number;
     colorsData: ColorsData;
+    cellCount: number;
 
     async onload() {
         // -------------------- Variables Init -------------------- //
@@ -25,9 +30,10 @@ export default class ColoredFont extends Plugin {
         let rgbConverter = new RGBConverter();
 
         await this.loadColorData();
+        this.cellCount = +this.colorsData.colorCellCount > MAX_CELL_COUNT ? MAX_CELL_COUNT : +this.colorsData.colorCellCount;
+        this.addSettingTab(new SettingsTab(this.app, this));
 
         // -------------------- Command Implementation -------------------- // 
-        // test //
         this.addCommand({
           id: 'add-text',
 			    name: 'Add the colored text',
@@ -64,7 +70,7 @@ export default class ColoredFont extends Plugin {
           hotkeys: [],
           callback: () => {
             this.prevIndex = this.curIndex;
-            this.curIndex = this.curIndex == 4 ? 0 : this.curIndex + 1;
+            this.curIndex = this.curIndex == (this.cellCount - 1) ? 0 : this.curIndex + 1;
 
             colorDivs[this.prevIndex].style.borderStyle = 'none';
             colorDivs[this.curIndex].style.borderStyle = 'solid';
@@ -79,7 +85,7 @@ export default class ColoredFont extends Plugin {
           hotkeys: [],
           callback: () => {
             this.prevIndex = this.curIndex;
-            this.curIndex = this.curIndex == 0 ? 4 : this.curIndex - 1;
+            this.curIndex = this.curIndex == 0 ? (this.cellCount - 1) : this.curIndex - 1;
 
             colorDivs[this.prevIndex].style.borderStyle = 'none';
             colorDivs[this.curIndex].style.borderStyle = 'solid';
@@ -92,9 +98,14 @@ export default class ColoredFont extends Plugin {
         let statusBarColor = this.addStatusBarItem();
 
         const colorDivs: HTMLDivElement[] = [];
-        for(let i = 0; i < 5; i++) {
+        for(let i = 0; i < this.cellCount; i++) {
           let colorText = statusBarColor.createEl('div', { cls: 'status-color' });
-          colorText.style.backgroundColor = this.colorsData.colorArr[i];
+
+          // TODO: Find a better way to do this
+          if(i > this.colorsData.colorArr.length - 1)
+            colorText.style.backgroundColor = "#000000";
+          else 
+            colorText.style.backgroundColor = this.colorsData.colorArr[i];
 
           colorDivs.push(colorText);
         }
