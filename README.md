@@ -1,4 +1,4 @@
-# Obsidian Colored Text Plugın
+# Obsidian Colored Text Plugin
 
 This is a plugin for [Obsidian](https://obsidian.md/) for adding colored texts to your notes.
 
@@ -28,6 +28,7 @@ I suggest using hotkeys for these commands as I designed this plugin with a keyb
 ## Roadmap
 
 - [x] Saving the condition of status bar to use it after reopening the app 
+- [x] Adjusting count of color cells in status bar
 - [ ] Ability to change color using right click
 - [ ] Selecting favorite colors in the settings and ability to select from those
 - [ ] Saving recent colors selected to also make it easier to select the color input
