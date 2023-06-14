@@ -2,8 +2,12 @@ name: Build and test project
 on:
   push:
     branches: [ main ]
+    paths: 
+      - 'src/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/**'
 
 jobs:
   build:
