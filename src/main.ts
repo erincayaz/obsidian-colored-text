@@ -40,10 +40,11 @@ export default class ColoredFont extends Plugin {
           hotkeys: [],
           editorCallback: (editor: Editor, view: MarkdownView) => {
             let selection = editor.getSelection();
-            editor.replaceSelection(`<span style="color:${this.curColor}">${selection}</span>`)
+            editor.replaceSelection(`<span style="color:${this.curColor}">${selection}</span>`);
 
-            const curserEnd = editor.getCursor("to");
-            editor.setCursor(curserEnd.line, curserEnd.ch + 1);
+            const cursorEnd = editor.getCursor("to");
+            cursorEnd.ch -= 7;
+            editor.setCursor(cursorEnd);
           }
         });
         
