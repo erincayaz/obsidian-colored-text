@@ -2,6 +2,7 @@ import { App, Editor, MarkdownView, Menu, Modal, Notice, Plugin, PluginSettingTa
 import { ColorModal } from "./modal";
 import { RGBConverter } from "./rgbConverter";
 import { SettingsTab } from './settings';
+import contextMenu from './contextMenu';
 
 const DEFAULT_COLOR: string = '#000000';
 const MAX_CELL_COUNT: number = 20;
@@ -32,6 +33,10 @@ export default class ColoredFont extends Plugin {
         await this.loadColorData();
         this.cellCount = +this.colorsData.colorCellCount > MAX_CELL_COUNT ? MAX_CELL_COUNT : +this.colorsData.colorCellCount;
         this.addSettingTab(new SettingsTab(this.app, this));
+
+        this.registerEvent(
+          this.app.workspace.on("editor-menu", this.handleColorChangeInContextMenu)
+        );
 
         // -------------------- Command Implementation -------------------- // 
         this.addCommand({
@@ -114,8 +119,16 @@ export default class ColoredFont extends Plugin {
         colorDivs[0].style.borderStyle = 'solid';
     }
 
+    handleColorChangeInContextMenu = (
+      menu: Menu,
+      editor: Editor,
+    ): void => {
+      contextMenu(app, menu, editor, this, this.curColor);
+    }
+
     async loadColorData() {
       this.colorsData = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+      this.curColor = this.colorsData.colorArr[0];
     }
 
     async saveColorData() {
