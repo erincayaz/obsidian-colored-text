@@ -8,26 +8,30 @@ export default class ColorBar {
   }
 
   addColorBar() {
-    let statusBarColor = this.plugin.addStatusBarItem();
-    statusBarColor.addClass("mod-clickable")
-     
     for (let i = 0; i < this.plugin.cellCount; i++) {
-      let colorText = statusBarColor.createDiv(
+      let statusBarColor = this.plugin.addStatusBarItem();
+
+      statusBarColor.style.paddingLeft = "0";
+      statusBarColor.style.paddingRight = "0";
+      statusBarColor.id = `saved-color-${i}`;
+
+      statusBarColor.addClasses(["mod-clickable"]);
+      statusBarColor.addEventListener("click", this.onClick());
+      
+      let colorIcon = statusBarColor.createDiv(
         { 
           cls: 'status-color',
-          attr: {id: `saved-color-${i}`}
         }
       );
-      colorText.addEventListener("click", this.onClick());
 
       // TODO: Find a better way to do this
       if (i > this.plugin.colorsData.colorArr.length - 1) {
-        colorText.style.backgroundColor = "#000000";
+        colorIcon.style.backgroundColor = "#000000";
       }
       else {
-        colorText.style.backgroundColor = this.plugin.colorsData.colorArr[i];
+        colorIcon.style.backgroundColor = this.plugin.colorsData.colorArr[i];
       }
-      this.plugin.colorDivs.push(colorText);
+      this.plugin.colorDivs.push(colorIcon);
     }
     
     this.plugin.colorDivs[0].style.borderStyle = 'solid';
