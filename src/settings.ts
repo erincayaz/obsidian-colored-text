@@ -15,8 +15,8 @@ export class SettingsTab extends PluginSettingTab {
       containerEl.empty();
   
       new Setting(containerEl)
-        .setName("Number of Color Bars")
-        .setDesc("Change number of color cells (You need to reload Obsidian for change to occur)")
+        .setName("Number of Color Cells")
+        .setDesc("Change number of color cells (You need to reload Obsidian for changes to occur)")
         .addText((text) =>
           text
             .setPlaceholder("5")
