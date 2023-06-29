@@ -1,7 +1,7 @@
 import { Menu, Editor, MarkdownView, Plugin } from 'obsidian';
-import ColorBar from './colorBar';
-import { ColorModal } from "./modal";
-import { RGBConverter } from "./rgbConverter";
+import ColorBar from './ColorBar';
+import { ColorModal } from "./ColorModal";
+import { RGBConverter } from "./RGBConverter";
 import { SettingsTab } from './settings';
 import contextMenu from './contextMenu';
 
