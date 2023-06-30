@@ -27,6 +27,7 @@ export default class ColoredFont extends Plugin {
     colorDivs: HTMLDivElement[] = [];
 
     colorBar: ColorBar;
+    rgbConverter = new RGBConverter();
 
     async onload() {
         // -------------------- Variables Init -------------------- //
@@ -92,16 +93,14 @@ export default class ColoredFont extends Plugin {
         })
     }
 
-    selectColor(newIndex: number) {
-      let rgbConverter = new RGBConverter();
-      
+    selectColor(newIndex: number) {      
       this.prevIndex = this.curIndex;
       this.curIndex = newIndex;
 
       this.colorDivs[this.prevIndex].style.borderStyle = 'none';
       this.colorDivs[this.curIndex].style.borderStyle = 'solid';
 
-      this.curColor = rgbConverter.rgbToHex(this.colorDivs[this.curIndex].style.backgroundColor);
+      this.curColor = this.rgbConverter.rgbToHex(this.colorDivs[this.curIndex].style.backgroundColor);
     }
 
     handleColorChangeInContextMenu = (
