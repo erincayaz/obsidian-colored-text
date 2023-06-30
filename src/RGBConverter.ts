@@ -5,12 +5,11 @@ export class RGBConverter {
       }
       
       rgbToHex(rgb : string) {
-        // rgb(0, 0, 0)
         let substr = rgb.substring(4, rgb.length - 1);
         let rgbArr = substr.split(',');
 
         let hexStr = "#";
-        for(let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             hexStr += this.componentToHex(parseInt(rgbArr[i]));
         }
 

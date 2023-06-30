@@ -1,6 +1,7 @@
-import { App, Editor, MarkdownView, Menu, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
-import { ColorModal } from "./modal";
-import { RGBConverter } from "./rgbConverter";
+import { Menu, Editor, MarkdownView, Plugin } from 'obsidian';
+import ColorBar from './ColorBar';
+import { ColorModal } from "./ColorModal";
+import { RGBConverter } from "./RGBConverter";
 import { SettingsTab } from './settings';
 import contextMenu from './contextMenu';
 
@@ -23,14 +24,18 @@ export default class ColoredFont extends Plugin {
     prevIndex: number;
     colorsData: ColorsData;
     cellCount: number;
+    colorDivs: HTMLDivElement[] = [];
+
+    colorBar: ColorBar;
+    rgbConverter = new RGBConverter();
 
     async onload() {
         // -------------------- Variables Init -------------------- //
         this.curColor = DEFAULT_COLOR;
         this.curIndex = 0;
-        let rgbConverter = new RGBConverter();
 
         await this.loadColorData();
+        
         this.cellCount = +this.colorsData.colorCellCount > MAX_CELL_COUNT ? MAX_CELL_COUNT : +this.colorsData.colorCellCount;
         this.addSettingTab(new SettingsTab(this.app, this));
 
@@ -38,6 +43,9 @@ export default class ColoredFont extends Plugin {
           this.app.workspace.on("editor-menu", this.handleColorChangeInContextMenu)
         );
 
+        this.colorBar = new ColorBar(this);
+        this.colorBar.addColorBar();
+        
         // -------------------- Command Implementation -------------------- // 
         this.addCommand({
           id: 'add-text',
@@ -60,7 +68,7 @@ export default class ColoredFont extends Plugin {
           callback: () => {
             new ColorModal(this.app, this.curColor, (result) => {
               this.curColor = result;
-              colorDivs[this.curIndex].style.backgroundColor = result;
+              this.colorDivs[this.curIndex].style.backgroundColor = result;
               
               // Save Color
               this.colorsData.colorArr[this.curIndex] = result;
@@ -74,49 +82,25 @@ export default class ColoredFont extends Plugin {
           id: 'change-color-forward',
           name: 'Change the Color Forward',
           hotkeys: [],
-          callback: () => {
-            this.prevIndex = this.curIndex;
-            this.curIndex = this.curIndex == (this.cellCount - 1) ? 0 : this.curIndex + 1;
-
-            colorDivs[this.prevIndex].style.borderStyle = 'none';
-            colorDivs[this.curIndex].style.borderStyle = 'solid';
-
-            this.curColor = rgbConverter.rgbToHex(colorDivs[this.curIndex].style.backgroundColor);
-          }
+          callback: () => this.selectColor(this.curIndex == (this.cellCount - 1) ? 0 : this.curIndex + 1)
         })
 
         this.addCommand({
           id: 'change-color-backwards',
           name: 'Change the Color Backwards',
           hotkeys: [],
-          callback: () => {
-            this.prevIndex = this.curIndex;
-            this.curIndex = this.curIndex == 0 ? (this.cellCount - 1) : this.curIndex - 1;
-
-            colorDivs[this.prevIndex].style.borderStyle = 'none';
-            colorDivs[this.curIndex].style.borderStyle = 'solid';
-
-            this.curColor = rgbConverter.rgbToHex(colorDivs[this.curIndex].style.backgroundColor);
-          }
+          callback: () => this.selectColor(this.curIndex == 0 ? (this.cellCount - 1) : this.curIndex - 1)
         })
+    }
 
-        // -------------------- Status Bar -------------------- //
-        let statusBarColor = this.addStatusBarItem();
+    selectColor(newIndex: number) {      
+      this.prevIndex = this.curIndex;
+      this.curIndex = newIndex;
 
-        const colorDivs: HTMLDivElement[] = [];
-        for(let i = 0; i < this.cellCount; i++) {
-          let colorText = statusBarColor.createEl('div', { cls: 'status-color' });
+      this.colorDivs[this.prevIndex].style.borderStyle = 'none';
+      this.colorDivs[this.curIndex].style.borderStyle = 'solid';
 
-          // TODO: Find a better way to do this
-          if(i > this.colorsData.colorArr.length - 1)
-            colorText.style.backgroundColor = "#000000";
-          else 
-            colorText.style.backgroundColor = this.colorsData.colorArr[i];
-
-          colorDivs.push(colorText);
-        }
-
-        colorDivs[0].style.borderStyle = 'solid';
+      this.curColor = this.rgbConverter.rgbToHex(this.colorDivs[this.curIndex].style.backgroundColor);
     }
 
     handleColorChangeInContextMenu = (
