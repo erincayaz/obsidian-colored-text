@@ -13,10 +13,10 @@ export default class ColorBar {
 
       statusBarColor.style.paddingLeft = "0";
       statusBarColor.style.paddingRight = "0";
-      statusBarColor.id = `saved-color-${i}`;
+      statusBarColor.style.order = `${i + 1}`;
 
       statusBarColor.addClasses(["mod-clickable"]);
-      statusBarColor.addEventListener("click", this.onClick());
+      statusBarColor.addEventListener("click", this.onClick(i));
       
       let colorIcon = statusBarColor.createDiv(
         { 
@@ -37,13 +37,8 @@ export default class ColorBar {
     this.plugin.colorDivs[0].style.borderStyle = 'solid';
   }
 
-  onClick() {
-    let plugin = this.plugin;
-
-    return function(this: HTMLDivElement, event: Event) {
-      let newIndex = Number(this.id.replace(/^\D+/g, ''));
-      plugin.selectColor(newIndex);
-    };
+  onClick = (index: number) => (e: Event) => {
+    this.plugin.selectColor(index);
   }
 }
  
