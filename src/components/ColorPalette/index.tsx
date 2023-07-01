@@ -26,8 +26,7 @@ const ColorPalette = ({
           onClick={onColorClick(c)}
           disabled={c === selected}
         />
-      }
-      )}
+      })}
     </S.Row>
   )
 }
