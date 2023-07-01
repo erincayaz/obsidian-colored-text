@@ -2,12 +2,13 @@ import ColorPalette from "components/ColorPalette";
 import { App, Modal, Setting } from "obsidian";
 import React from "react";
 import ReactDOM from "react-dom";
-import { createRoot } from "react-dom/client";
+import { Root, createRoot } from "react-dom/client";
 
 export class ColorModal extends Modal {
   private colorResult: string;
   private prevColor: string;
   onSubmit: (result: string) => void;
+  private colorPaletteRoot: Root;
 
   constructor(app: App, prevColor: string, onSubmit: (result: string) => void) {
     super(app);
@@ -21,9 +22,9 @@ export class ColorModal extends Modal {
     const { contentEl } = this;
     contentEl.createEl("h1", { text: "Color Picker" });
     contentEl.createDiv();
-    const colorPaletteRoot = createRoot(contentEl.children[1]);
+    this.colorPaletteRoot = createRoot(contentEl.children[1]);
 
-    colorPaletteRoot.render(
+    this.colorPaletteRoot.render(
       <React.StrictMode>
         <div
           className="setting-item"
@@ -59,9 +60,8 @@ export class ColorModal extends Modal {
 
   onClose() {
     const { contentEl } = this;
+    this.colorPaletteRoot.unmount();
     contentEl.empty();
-
-    ReactDOM.unmountComponentAtNode(this.containerEl.children[1]);
   }
 
   onModalColorClick = (color: string) => {
