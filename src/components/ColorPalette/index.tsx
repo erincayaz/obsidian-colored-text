@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import * as S from "./Styles";
 
-const COLOR_OPTIONS = [
-  "#c00000",
-  "#ff0000",
-  "#ffc000",
-  "#ffff00",
-  "#92d050",
-  "#00b050",
-  "#00b0f0",
-  "#0070c0",
-  "#002060",
-  "#7030a0"
-]
-
 interface ColorPickerProps {
+  colors: string[];
   onModalColorClick?: (e?: any) => void;
 }
 
 const ColorPalette = ({
+  colors,
   onModalColorClick = () => {},
 }: ColorPickerProps) => {
   const [selected, setSelected] = useState<string>("");
@@ -30,15 +19,14 @@ const ColorPalette = ({
 
   return (
     <S.Row>
-      {COLOR_OPTIONS.map(c => {
+      {colors.map(c => {
         return <S.ColorItem
           key={c}
           color={c}
           onClick={onColorClick(c)}
           disabled={c === selected}
         />
-      }
-      )}
+      })}
     </S.Row>
   )
 }
