@@ -1,4 +1,4 @@
-import { ColorsData } from "types/plugin";
+import { ColorsData } from "../types/plugin";
 
 export const MAX_CELL_COUNT: number = 20;
 export const DEFAULT_COLOR: string = '#000000';

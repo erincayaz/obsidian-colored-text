@@ -1,5 +1,5 @@
-import { Menu, Editor, App } from "obsidian";
-import ColoredFont from "main";
+import { App, Editor, Menu } from "obsidian";
+import ColoredFont from "./main";
 
 export default function contextMenu(
   app: App,

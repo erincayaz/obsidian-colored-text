@@ -1,21 +1,23 @@
-import ColorPalette from "components/ColorPalette";
 import { App, Modal, Setting } from "obsidian";
 import React from "react";
-import ReactDOM from "react-dom";
 import { Root, createRoot } from "react-dom/client";
+import ColorPalette from "./components/ColorPalette";
+import ColoredFont from "./main";
 
 export class ColorModal extends Modal {
   private colorResult: string;
   private prevColor: string;
   onSubmit: (result: string) => void;
   private colorPaletteRoot: Root;
+  plugin: ColoredFont;
 
-  constructor(app: App, prevColor: string, onSubmit: (result: string) => void) {
+  constructor(app: App, plugin: ColoredFont, prevColor: string, onSubmit: (result: string) => void) {
     super(app);
-    this.onSubmit = onSubmit;
 
-    this.prevColor = prevColor;
     this.colorResult = prevColor;
+    this.plugin = plugin;
+    this.prevColor = prevColor;
+    this.onSubmit = onSubmit;
   }
 
   async onOpen() {
@@ -31,7 +33,10 @@ export class ColorModal extends Modal {
           style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
         >
           <div>Select a color</div>
-          <ColorPalette onModalColorClick={this.onModalColorClick} />
+          <ColorPalette
+            colors={this.plugin.colorsData.favoriteColors}
+            onModalColorClick={this.onModalColorClick}
+          />
         </div>
       </React.StrictMode>
     );

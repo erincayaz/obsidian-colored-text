@@ -1,5 +1,5 @@
-import ColoredFont from "./main"
 import { App, PluginSettingTab, Setting } from "obsidian";
+import ColoredFont from "./main";
 
 export class SettingsTab extends PluginSettingTab {
     plugin: ColoredFont;
@@ -26,5 +26,21 @@ export class SettingsTab extends PluginSettingTab {
               await this.plugin.saveColorData();
             })
         );
+      
+      const favoriteColors = new Setting(containerEl)
+        .setName("Favorite Colors")
+        .setDesc("Set your favorite colors to pick from");
+      
+      this.plugin.colorsData.favoriteColors.forEach((c, i) => {
+        favoriteColors
+        .addColorPicker((color) =>
+          color
+            .setValue(c)
+            .onChange(async (value) => {
+              this.plugin.colorsData.favoriteColors[i] = value;
+              await this.plugin.saveColorData();
+            })
+        ) 
+      });
     }
   }

@@ -1,11 +1,11 @@
-import { DEFAULT_COLOR, DEFAULT_SETTINGS, MAX_CELL_COUNT } from 'constants/defaults';
 import { Editor, MarkdownView, Menu, Plugin } from 'obsidian';
-import { ColorsData } from 'types/plugin';
 import ColorBar from './ColorBar';
 import { ColorModal } from "./ColorModal";
 import { RGBConverter } from "./RGBConverter";
+import { DEFAULT_COLOR, DEFAULT_SETTINGS, MAX_CELL_COUNT } from './constants/defaults';
 import contextMenu from './contextMenu';
 import { SettingsTab } from './settings';
+import { ColorsData } from './types/plugin';
 
 export default class ColoredFont extends Plugin {
     curColor: string;
@@ -55,7 +55,7 @@ export default class ColoredFont extends Plugin {
           name: 'Get Color Input',
           hotkeys: [],
           callback: () => {
-            new ColorModal(this.app, this.curColor, (result) => {
+            new ColorModal(this.app, this, this.curColor, (result) => {
               this.curColor = result;
               this.colorDivs[this.curIndex].style.backgroundColor = result;
               
