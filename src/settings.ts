@@ -52,7 +52,7 @@ export class SettingsTab extends PluginSettingTab {
           .setTooltip("Restore defaults")
           .onClick(async () => {
               if (DEFAULT_SETTINGS.favoriteColors !== undefined) {
-                this.plugin.colorsData.favoriteColors = DEFAULT_SETTINGS.favoriteColors;
+                this.plugin.colorsData.favoriteColors = [...DEFAULT_SETTINGS.favoriteColors];
               }
               this.reloadColors(this.favoriteColorsSetting.components);
               await this.plugin.saveColorData();
