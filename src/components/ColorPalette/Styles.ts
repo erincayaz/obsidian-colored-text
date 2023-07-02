@@ -37,5 +37,4 @@ export const ColorItem = styled.button<ColorItemProps>`
     border: 1px solid ${SELECTED_BORDER_COLOR};
     cursor: default;
   }
-
 `;

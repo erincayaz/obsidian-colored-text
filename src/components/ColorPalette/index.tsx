@@ -19,9 +19,9 @@ const ColorPalette = ({
 
   return (
     <S.Row>
-      {colors.map(c => {
+      {colors.map((c, i) => {
         return <S.ColorItem
-          key={c}
+          key={`${c}-${i}`}
           color={c}
           onClick={onColorClick(c)}
           disabled={c === selected}
