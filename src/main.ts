@@ -100,7 +100,12 @@ export default class ColoredFont extends Plugin {
     }
 
     async loadColorData() {
-      this.colorsData = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+      this.colorsData = Object.assign({}, 
+        {
+          ...DEFAULT_SETTINGS,
+          colorArr: [...DEFAULT_SETTINGS.colorArr],
+          favoriteColors: [...DEFAULT_SETTINGS.favoriteColors],
+        }, await this.loadData());
       this.curColor = this.colorsData.colorArr[0];
     }
 
