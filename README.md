@@ -30,7 +30,6 @@ I suggest using hotkeys for these commands as I designed this plugin with a keyb
 - [x] Saving the condition of status bar to use it after reopening the app 
 - [x] Adjusting count of color cells in status bar
 - [x] Ability to change color using right click
-- [ ] Selecting favorite colors in the settings and ability to select from those
-- [ ] Saving recent colors selected to also make it easier to select the color input
+- [x] Selecting favorite colors in the settings and ability to select from those
 - [ ] Latex/Mathjax Support will be added
 - [ ] Tests will be implemented
