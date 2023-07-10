@@ -24,7 +24,7 @@ I suggest using hotkeys for these commands as I designed this plugin with a keyb
 
 ## Demo
 
-![Colored Text Demo](https://raw.githubusercontent.com/erincayaz/obsidian-colored-text/main/DemoPlugin.gif)
+![Colored Text Demo](https://github.com/erincayaz/obsidian-colored-text/blob/main/demo/DemoPlugin.gif)
 
 ## Roadmap
 
