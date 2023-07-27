@@ -38,7 +38,12 @@ export default class ColorBar {
   }
 
   onClick = (index: number) => (e: Event) => {
-    this.plugin.selectColor(index);
+    if(this.plugin.curIndex == index) {
+      this.plugin.openColorModal();
+    }
+    else {
+      this.plugin.selectColor(index); 
+    }
   }
 }
  

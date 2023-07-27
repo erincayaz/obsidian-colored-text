@@ -13,7 +13,7 @@ export default function contextMenu(
   if (selection) {
     menu.addItem((item) => {
       item
-        .setTitle("Change Color")
+        .setTitle("Color Text")
         .onClick((e) => {
           if (editor.getSelection()) {
             editor.replaceSelection(`<span style="color:${curColor}">${selection}</span>`);
