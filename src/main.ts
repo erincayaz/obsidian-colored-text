@@ -37,8 +37,8 @@ export default class ColoredFont extends Plugin {
         
         // -------------------- Command Implementation -------------------- // 
         this.addCommand({
-          id: 'add-text',
-			    name: 'Add the colored text',
+          id: 'color-text',
+			    name: 'Color Text',
           hotkeys: [],
           editorCallback: (editor: Editor, view: MarkdownView) => {
             let selection = editor.getSelection();
@@ -53,18 +53,11 @@ export default class ColoredFont extends Plugin {
 
         
         this.addCommand({
-          id: 'get-color-input',
-          name: 'Get Color Input',
+          id: 'alter-color-palette',
+          name: 'Alter Color Palette',
           hotkeys: [],
           callback: () => {
-            new ColorModal(this.app, this, this.curColor, (result) => {
-              this.curColor = result;
-              this.colorDivs[this.curIndex].style.backgroundColor = result;
-              
-              // Save Color
-              this.colorsData.colorArr[this.curIndex] = result;
-              this.saveColorData();
-            }).open();
+            this.openColorModal();
           },
         })
 
@@ -155,6 +148,16 @@ export default class ColoredFont extends Plugin {
           }
         }
     });
+
+    openColorModal() {
+      new ColorModal(this.app, this, this.curColor, (result) => {
+        this.curColor = result;
+        this.colorDivs[this.curIndex].style.backgroundColor = result;
+        
+        this.colorsData.colorArr[this.curIndex] = result;
+        this.saveColorData();
+      }).open();
+    }
 
     selectColor(newIndex: number) {      
       this.prevIndex = this.curIndex;
