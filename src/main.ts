@@ -148,6 +148,7 @@ export default class ColoredFont extends Plugin {
           }
         }
     });
+  }
 
     openColorModal() {
       new ColorModal(this.app, this, this.curColor, (result) => {
