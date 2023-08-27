@@ -1,5 +1,6 @@
 import { App, Editor, Menu } from "obsidian";
 import ColoredFont from "./main";
+import removeColor from "./colorRemover";
 
 export default function contextMenu(
   app: App,
@@ -23,5 +24,13 @@ export default function contextMenu(
           }
         });
     });
+
+    menu.addItem((item) => {
+      item
+        .setTitle("Remove Color")
+        .onClick((e) => {
+          removeColor(editor);
+        })
+    })
   }
 }
