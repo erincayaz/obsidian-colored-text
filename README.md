@@ -11,11 +11,13 @@ This is a plugin for [Obsidian](https://obsidian.md/) for adding colored texts t
 - You can change the current slot's color by opening color input menu, by using hotkey or by clicking the desired color cell in the status bar
 - In the input menu, there are two ways to select colors. You can either select from favorite colors, which is set to most used colors by default and can be customized in the settings, or you can select a customized color by using color palette
 - You can change the color of the selected text into current slot's color by using hotkey or right click
+- You can remove color of the selected text by using hotkey or right click
 
 ## Usage
 
-Right now there are 4 commands available:
+Right now there are 5 commands available:
 - Change color of selected text
+- Remove color of selected text
 - Switch between slots, forward
 - Switch between slots, backwards
 - Open color input menu
