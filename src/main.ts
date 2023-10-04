@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Menu, Plugin } from 'obsidian';
+import {Editor, MarkdownView, Menu, Plugin} from 'obsidian';
 import ColorBar from './colorBar';
 import { ColorModal } from "./colorModal";
 import { RgbConverter } from "./rgbConverter";
@@ -6,6 +6,7 @@ import { DEFAULT_COLOR, DEFAULT_SETTINGS, MAX_CELL_COUNT } from './constants/def
 import contextMenu from './contextMenu';
 import { SettingsTab } from './settings';
 import { ColorsData } from './types/plugin';
+import { textFormattingPlugin } from "./textFormatting";
 import removeColor from './colorRemover';
 
 export default class ColoredFont extends Plugin {
@@ -14,6 +15,7 @@ export default class ColoredFont extends Plugin {
     prevIndex: number;
     colorsData: ColorsData;
     cellCount: number;
+    hidePlugin: boolean;
     colorDivs: HTMLDivElement[] = [];
 
     colorBar: ColorBar;
@@ -27,7 +29,10 @@ export default class ColoredFont extends Plugin {
         await this.loadColorData();
         
         this.cellCount = +this.colorsData.colorCellCount > MAX_CELL_COUNT ? MAX_CELL_COUNT : +this.colorsData.colorCellCount;
+        this.hidePlugin = this.colorsData.hidePlugin;
         this.addSettingTab(new SettingsTab(this.app, this));
+
+        this.registerEditorExtension(textFormattingPlugin);
 
         this.registerEvent(
           this.app.workspace.on("editor-menu", this.handleColorChangeInContextMenu)
@@ -36,13 +41,14 @@ export default class ColoredFont extends Plugin {
         this.colorBar = new ColorBar(this);
         this.colorBar.addColorBar();
         
-        // -------------------- Command Implementation -------------------- // 
+        // -------------------- HTML Elements -------------------- //
         this.addCommand({
           id: 'color-text',
-		      name: 'Color Text',
+          name: 'Color Text',
           hotkeys: [],
           editorCallback: (editor: Editor, view: MarkdownView) => {
             const selection = editor.getSelection();
+
             editor.replaceSelection(`<span style="color:${this.curColor}">${selection}</span>`);
 
             const cursorEnd = editor.getCursor("to");
@@ -51,6 +57,7 @@ export default class ColoredFont extends Plugin {
           }
         });
 
+        // -------------------- Pop-out Window -------------------- //
         this.addCommand({
           id: 'alter-color-palette',
           name: 'Alter Color Palette',
@@ -83,8 +90,8 @@ export default class ColoredFont extends Plugin {
           editorCallback:(editor, view) => {
             removeColor(editor);
           }
-    });
-  }
+        });
+    }
 
     openColorModal() {
       new ColorModal(this.app, this, this.curColor, (result) => {
@@ -100,8 +107,10 @@ export default class ColoredFont extends Plugin {
       this.prevIndex = this.curIndex;
       this.curIndex = newIndex;
 
-      this.colorDivs[this.prevIndex].style.borderStyle = 'none';
-      this.colorDivs[this.curIndex].style.borderStyle = 'solid';
+      if (!this.hidePlugin) {
+        this.colorDivs[this.prevIndex].style.borderStyle = 'none';
+        this.colorDivs[this.curIndex].style.borderStyle = 'solid';
+      }
 
       this.curColor = this.rgbConverter.rgbToHex(this.colorDivs[this.curIndex].style.backgroundColor);
     }
@@ -120,6 +129,7 @@ export default class ColoredFont extends Plugin {
           colorArr: [...DEFAULT_SETTINGS.colorArr],
           favoriteColors: [...DEFAULT_SETTINGS.favoriteColors],
         }, await this.loadData());
+      console.log(this.colorsData);
       this.curColor = this.colorsData.colorArr[0];
     }
 

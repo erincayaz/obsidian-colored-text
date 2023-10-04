@@ -1,12 +1,12 @@
 export class RgbConverter {
     componentToHex(c : number) {
-      let hex = c.toString(16);
+      const hex = c.toString(16);
       return hex.length == 1 ? "0" + hex : hex;
     }
       
     rgbToHex(rgb : string) {
-      let substr = rgb.substring(4, rgb.length - 1);
-      let rgbArr = substr.split(',');
+      const substr = rgb.substring(4, rgb.length - 1);
+      const rgbArr = substr.split(',');
 
       let hexStr = "#";
       for (let i = 0; i < 3; i++) {

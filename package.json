@@ -25,6 +25,7 @@
 		"typescript": "4.7.4"
 	},
 	"dependencies": {
+		"@codemirror/language": "^6.9.0",
 		"check-source-formatting": "^2.0.14",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

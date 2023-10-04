@@ -9,16 +9,21 @@ export default class ColorBar {
 
   addColorBar() {
     for (let i = 0; i < this.plugin.cellCount; i++) {
-      let statusBarColor = this.plugin.addStatusBarItem();
+      const statusBarColor = this.plugin.addStatusBarItem();
 
       statusBarColor.style.paddingLeft = "0";
       statusBarColor.style.paddingRight = "0";
       statusBarColor.style.order = `${i + 1}`;
 
+      if(this.plugin.hidePlugin) {
+        statusBarColor.style.height = "0";
+        statusBarColor.style.width = "0";
+      }
+
       statusBarColor.addClasses(["mod-clickable"]);
       statusBarColor.addEventListener("click", this.onClick(i));
       
-      let colorIcon = statusBarColor.createDiv(
+      const colorIcon = statusBarColor.createDiv(
         { 
           cls: 'status-color',
         }
@@ -33,8 +38,9 @@ export default class ColorBar {
       }
       this.plugin.colorDivs.push(colorIcon);
     }
-    
-    this.plugin.colorDivs[0].style.borderStyle = 'solid';
+
+    if(!this.plugin.hidePlugin)
+      this.plugin.colorDivs[0].style.borderStyle = 'solid';
   }
 
   onClick = (index: number) => (e: Event) => {

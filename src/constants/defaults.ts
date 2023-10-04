@@ -1,7 +1,7 @@
 import { ColorsData } from "../types/plugin";
 
-export const MAX_CELL_COUNT: number = 20;
-export const DEFAULT_COLOR: string = '#000000';
+export const MAX_CELL_COUNT = 20;
+export const DEFAULT_COLOR = '#000000';
 export const DEFAULT_SETTINGS: Readonly<ColorsData> = {
   favoriteColors: [
     "#c00000",
@@ -16,5 +16,6 @@ export const DEFAULT_SETTINGS: Readonly<ColorsData> = {
     "#7030a0"
   ],
   colorArr: Array(5).fill(DEFAULT_COLOR),
-  colorCellCount: "5"
+  colorCellCount: "5",
+  hidePlugin: false
 };
