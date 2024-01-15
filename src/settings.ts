@@ -28,18 +28,6 @@ export class SettingsTab extends PluginSettingTab {
               await this.plugin.saveColorData();
             })
         );
-
-      new Setting(containerEl)
-        .setName("Hide Plugin in the Status Bar")
-        .setDesc("(You need to reload Obsidian for changes to occur)")
-        .addToggle((toggle) => {
-          toggle
-              .setValue(this.plugin.colorsData.hidePlugin)
-              .onChange(async (value) => {
-                this.plugin.colorsData.hidePlugin = value;
-                await this.plugin.saveColorData();
-              })
-        })
       
       this.favoriteColorsSetting = new Setting(containerEl)
         .setName("Favorite Colors")
@@ -70,6 +58,18 @@ export class SettingsTab extends PluginSettingTab {
               await this.plugin.saveColorData();
           })
       });
+
+      new Setting(containerEl)
+        .setName("Hide Plugin in the Status Bar")
+        .setDesc("(You need to reload Obsidian for changes to occur)")
+        .addToggle((toggle) => {
+          toggle
+            .setValue(this.plugin.colorsData.hidePlugin)
+            .onChange(async (value) => {
+              this.plugin.colorsData.hidePlugin = value;
+              await this.plugin.saveColorData();
+            })
+        })
     }
     
     reloadColors(components: BaseComponent[]) {
