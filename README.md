@@ -12,6 +12,7 @@ This is a plugin for [Obsidian](https://obsidian.md/) for adding colored texts t
 - In the input menu, there are two ways to select colors. You can either select from your favorite colors, which is set to the most used colors by default and can be customized in the settings, or you can select a customized color by using the color palette
 - You can change the color of the selected text into the current slot's color by using the assigned hotkey or right-clicking
 - You can remove the color of the selected text by using the assigned hotkey or right-clicking
+- Highlight mode is added, you can activate it through the highlight icon in the status bar or assign a hotkey
 
 ## Usage
 
@@ -34,5 +35,8 @@ I suggest using hotkeys for these commands as I designed this plugin with a keyb
 - [x] Adjusting the count of color cells in the status bar
 - [x] Ability to change color using right click
 - [x] Selecting favorite colors in the settings and ability to select from those
+
+Help would be appriciated on these topics:
+- [ ] Bold/Italic fix
 - [ ] Latex/Mathjax Support will be added
 - [ ] Tests will be implemented
