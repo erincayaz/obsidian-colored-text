@@ -3,14 +3,13 @@ import {setIcon} from "obsidian";
 
 export default class StatusBar {
   private plugin : ColoredFont;
-
-  private highlightButton : HTMLElement;
+  private coloredTextButton : HTMLElement;
+  private colorDivs : HTMLDivElement[] = [];
 
   constructor(plugin: ColoredFont) {
     this.plugin = plugin;
   }
 
-  // region Color Cells
   addColorCells() {
     for (let i = 0; i < this.plugin.cellCount; i++) {
       const statusBarColor = this.plugin.addStatusBarItem();
@@ -40,11 +39,11 @@ export default class StatusBar {
       else {
         colorIcon.style.backgroundColor = this.plugin.colorsData.colorArr[i];
       }
-      this.plugin.colorDivs.push(colorIcon);
+      this.colorDivs.push(colorIcon);
     }
 
     if(!this.plugin.hidePlugin)
-      this.plugin.colorDivs[0].style.borderStyle = 'solid';
+      this.colorDivs[0].style.borderStyle = 'solid';
   }
 
   private onClickColorBar = (index: number) => () => {
@@ -55,18 +54,16 @@ export default class StatusBar {
       this.plugin.selectColor(index); 
     }
   }
-  // endregion
 
-  // region Highlight Mode
-  addHighlightMode() {
+  addColoredTextMode() {
     const item = this.plugin.addStatusBarItem();
     item.style.order = "1";
-    item.ariaLabel = "Highlight Mode";
+    item.ariaLabel = "Colored Text";
 
-    this.highlightButton = item;
+    this.coloredTextButton = item;
 
     item.addClass("mod-clickable");
-    item.addEventListener("click", this.onClickHighlight());
+    item.addEventListener("click", this.onClickColoredText());
 
     setIcon(item, "highlighter");
 
@@ -76,16 +73,28 @@ export default class StatusBar {
     }
   }
 
-  clickHighlight() {
+  clickColoredText() {
     this.plugin.highlightMode = !this.plugin.highlightMode;
 
     if(!this.plugin.hidePlugin)
-      this.highlightButton.style.backgroundColor = this.plugin.highlightMode ? 'rgba(220, 220, 220, 0.3)' : 'rgba(220, 220, 220, 0)';
+      this.coloredTextButton.style.backgroundColor = this.plugin.highlightMode ? 'rgba(220, 220, 220, 0.3)' : 'rgba(220, 220, 220, 0)';
   }
 
-  private onClickHighlight = () => () => {
-    this.clickHighlight();
+  changeCurrentIndex() {
+    this.colorDivs[this.plugin.prevIndex].style.borderStyle = 'none';
+    this.colorDivs[this.plugin.curIndex].style.borderStyle = 'solid';
   }
-  // endregion
+
+  changeCellColor(modalResult: string) {
+    this.colorDivs[this.plugin.curIndex].style.backgroundColor = modalResult;
+  }
+
+  getCurCellColor() {
+    return this.colorDivs[this.plugin.curIndex].style.backgroundColor;
+  }
+
+  private onClickColoredText = () => () => {
+    this.clickColoredText();
+  }
 }
  

@@ -14,10 +14,11 @@ export default class ColoredFont extends Plugin {
   curColor: string;
   curIndex: number;
   prevIndex: number;
+  curTheme: string;
+
   colorsData: ColorsData;
   cellCount: number;
   hidePlugin: boolean;
-  colorDivs: HTMLDivElement[] = [];
 
   colorBar: StatusBar;
   rgbConverter = new RgbConverter();
@@ -29,25 +30,30 @@ export default class ColoredFont extends Plugin {
     this.curColor = DEFAULT_COLOR;
     this.curIndex = 0;
     this.highlightMode = false;
+    this.curTheme = this.getCurrentTheme();
 
     await this.loadColorData();
-
     this.cellCount = +this.colorsData.colorCellCount > MAX_CELL_COUNT ? MAX_CELL_COUNT : +this.colorsData.colorCellCount;
     this.hidePlugin = this.colorsData.hidePlugin;
     this.addSettingTab(new SettingsTab(this.app, this));
 
-    // Editor extension
+    // -------------------- Editor Extension -------------------- //
     const EditorExtensionClass = createEditorExtensionClass(this);
     this.registerEditorExtension(ViewPlugin.fromClass(EditorExtensionClass));
 
+    // -------------------- Context Menu -------------------- //
     this.registerEvent(
-      this.app.workspace.on("editor-menu", this.handleColorChangeInContextMenu)
+      this.app.workspace.on("editor-menu", (menu: Menu, editor: Editor) => {
+        contextMenu(app, menu, editor, this, this.curColor);
+      })
     );
 
+    // -------------------- Status Bar -------------------- //
     this.colorBar = new StatusBar(this);
     this.colorBar.addColorCells();
-    this.colorBar.addHighlightMode();
+    this.colorBar.addColoredTextMode();
 
+    // -------------------- Commands -------------------- //
     this.addCommand({
       id: 'color-text',
       name: 'Color Text',
@@ -90,12 +96,11 @@ export default class ColoredFont extends Plugin {
     });
 
     this.addCommand({
-      id: "change-highlight-mode",
+      id: "change-colored-text-mode",
       name: "Activate/Deactivate Highlight Mode",
       hotkeys: [],
       editorCallback: () => {
-        console.log("change-highlight");
-        this.colorBar.clickHighlight()
+        this.colorBar.clickColoredText()
       }
     })
   }
@@ -104,10 +109,24 @@ export default class ColoredFont extends Plugin {
 
   }
 
+  private getCurrentTheme() {
+    // @ts-expect-error private
+    let theme = this.app.getTheme();
+    if (theme === 'moonstone') {
+      theme = 'light';
+    } else if (theme === 'obsidian') {
+      theme = 'dark';
+    } else {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    return theme;
+  }
+
 	openColorModal() {
     new ColorModal(this.app, this, this.curColor, (result) => {
       this.curColor = result;
-      this.colorDivs[this.curIndex].style.backgroundColor = result;
+      this.colorBar.changeCellColor(result);
 
       this.colorsData.colorArr[this.curIndex] = result;
       this.saveColorData();
@@ -129,7 +148,7 @@ export default class ColoredFont extends Plugin {
           editor.setCursor(cursorEnd.line, cursorEnd.ch + 1);
         }
         catch (e) {
-          // This code piece add space to end of the doc if there is no space left
+          // This code piece adds space to end of the doc if there is no space left
           const lineText = editor.getLine(cursorEnd.line);
           editor.setLine(cursorEnd.line, lineText + " ");
         }
@@ -142,18 +161,10 @@ export default class ColoredFont extends Plugin {
     this.curIndex = newIndex;
 
     if (!this.hidePlugin) {
-      this.colorDivs[this.prevIndex].style.borderStyle = 'none';
-      this.colorDivs[this.curIndex].style.borderStyle = 'solid';
+      this.colorBar.changeCurrentIndex()
     }
 
-    this.curColor = this.rgbConverter.rgbToHex(this.colorDivs[this.curIndex].style.backgroundColor);
-  }
-
-  private handleColorChangeInContextMenu = (
-    menu: Menu,
-    editor: Editor,
-  ): void => {
-    contextMenu(app, menu, editor, this, this.curColor);
+    this.curColor = this.rgbConverter.rgbToHex(this.colorBar.getCurCellColor());
   }
 
   async loadColorData() {
