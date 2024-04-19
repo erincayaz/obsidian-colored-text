@@ -1,13 +1,11 @@
-import { App, Editor, Menu } from "obsidian";
-import ColoredFont from "./main";
+import { Editor, Menu } from "obsidian";
 import removeColor from "./colorRemover";
+import {ColorHandler} from "./colorHandler";
 
 export default function contextMenu(
-  app: App,
   menu: Menu,
   editor: Editor,
-  plugin: ColoredFont,
-  curColor: string
+  colorHandler: ColorHandler
 ): void {
   const selection = editor.getSelection();
 
@@ -15,20 +13,15 @@ export default function contextMenu(
     menu.addItem((item) => {
       item
         .setTitle("Color Text")
-        .onClick((e) => {
-          if (editor.getSelection()) {
-            editor.replaceSelection(`<span style="color:${curColor}">${selection}</span>`);
-
-            const cursorEnd = editor.getCursor("to");
-            editor.setCursor(cursorEnd.line, cursorEnd.ch + 1);
-          }
+        .onClick(() => {
+          colorHandler.changeColor();
         });
     });
 
     menu.addItem((item) => {
       item
         .setTitle("Remove Color")
-        .onClick((e) => {
+        .onClick(() => {
           removeColor(editor);
         })
     })

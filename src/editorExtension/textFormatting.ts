@@ -15,8 +15,7 @@ export class TextFormatting {
     this.posAfterAsterisk = 0;
   }
 
-  // This function detects if bold or italic markdown added. And if it is added, it will return
-  // boolean accordingly
+  // This function detects if bold or italic markdown added. And if it is added, it will return boolean accordingly
   detectMarkdown(update : ViewUpdate) {
     this.shouldInsert = 'none';
 

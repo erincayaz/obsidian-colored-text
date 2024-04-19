@@ -19,3 +19,13 @@ export const DEFAULT_SETTINGS: Readonly<ColorsData> = {
   colorCellCount: "5",
   hidePlugin: false
 };
+export enum IndexMode {
+  Forward,
+  Backwards,
+  Select
+}
+
+export enum ColorMode {
+  Normal,
+  Highlight
+}
