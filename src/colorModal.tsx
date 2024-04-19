@@ -3,20 +3,23 @@ import React from "react";
 import { Root, createRoot } from "react-dom/client";
 import ColorPalette from "./components/ColorPalette";
 import ColoredFont from "./main";
+import {RgbConverter} from "./rgbConverter";
 
 export class ColorModal extends Modal {
   private colorResult: string;
   private prevColor: string;
   onSubmit: (result: string) => void;
   private colorPaletteRoot: Root;
+  private rgbConverter: RgbConverter;
   plugin: ColoredFont;
 
   constructor(app: App, plugin: ColoredFont, prevColor: string, onSubmit: (result: string) => void) {
     super(app);
 
+    this.rgbConverter = new RgbConverter();
     this.colorResult = prevColor;
     this.plugin = plugin;
-    this.prevColor = prevColor;
+    this.prevColor = this.rgbConverter.rgbToHex(prevColor);
     this.onSubmit = onSubmit;
   }
 

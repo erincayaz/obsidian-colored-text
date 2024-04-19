@@ -1,27 +1,27 @@
-import {
-  ViewUpdate,
-  PluginValue,
-  EditorView
-} from "@codemirror/view";
+import {EditorView, PluginValue, ViewUpdate} from "@codemirror/view";
 import {TextFormatting} from "./textFormatting";
-import ColoredFont from "../main";
+import {ColorHandler} from "../colorHandler";
+import StatusBar from "../statusBar";
+import {ColorMode} from "../constants/defaults";
 
 export class EditorExtension implements PluginValue {
   editorView : EditorView;
   textFormatting : TextFormatting;
-  plugin : ColoredFont;
+  colorHandler : ColorHandler;
+  colorBar : StatusBar;
 
-  handleMouseUp = () => {
-    if(this.plugin.highlightMode)
-      this.plugin.changeColor();
-  }
-
-  constructor(view: EditorView, plugin : ColoredFont) {
+  constructor(view: EditorView, colorHandler: ColorHandler, colorBar: StatusBar) {
     this.editorView = view;
     this.textFormatting = new TextFormatting(view);
-    this.plugin = plugin;
+    this.colorHandler = colorHandler;
+    this.colorBar = colorBar;
 
     this.editorView.contentDOM.addEventListener('mouseup', this.handleMouseUp)
+  }
+
+  handleMouseUp = () => {
+    if(this.colorBar.highlightMode)
+      this.colorHandler.changeColor(ColorMode.Highlight);
   }
 
 	update(update: ViewUpdate) {
@@ -35,10 +35,11 @@ export class EditorExtension implements PluginValue {
   }
 }
 
-export function createEditorExtensionClass(plugin: ColoredFont) {
+// This is needed for the editor extension to work, but don't really know why
+export function createEditorExtensionClass(colorHandler: ColorHandler, colorBar: StatusBar) {
 	return class extends EditorExtension {
 		constructor(view: EditorView) {
-			super(view, plugin);
+			super(view, colorHandler, colorBar);
 		}
 	};
 }
