@@ -19,6 +19,13 @@ export const DEFAULT_SETTINGS: Readonly<ColorsData> = {
   colorCellCount: "5",
   hidePlugin: false
 };
+
+export const STATUS_BAR_COLOR_LIGHT = '#f6f6f6';
+export const STATUS_BAR_COLOR_DARK = '#262626';
+
+export const COLORED_TEXT_MODE_HIGHLIGHTED_LIGHT = 'rgba(180, 180, 180, 0.3)';
+export const COLORED_TEXT_MODE_HIGHLIGHTED_DARK = 'rgba(220, 220, 220, 0.3)';
+
 export enum IndexMode {
   Forward,
   Backwards,
@@ -27,5 +34,5 @@ export enum IndexMode {
 
 export enum ColorMode {
   Normal,
-  Highlight
+  ColoredText
 }

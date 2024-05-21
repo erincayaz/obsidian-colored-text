@@ -20,8 +20,8 @@ export class EditorExtension implements PluginValue {
   }
 
   handleMouseUp = () => {
-    if(this.colorBar.highlightMode)
-      this.colorHandler.changeColor(ColorMode.Highlight);
+    if(this.colorBar.coloredText)
+      this.colorHandler.changeColor(ColorMode.ColoredText);
   }
 
 	update(update: ViewUpdate) {

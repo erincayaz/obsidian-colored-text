@@ -1,18 +1,18 @@
 import {App, MarkdownView} from "obsidian";
-import {RgbConverter} from "./rgbConverter";
+import {ColorUtils} from "./colorUtils";
 import StatusBar from "./statusBar";
 import {ColorMode} from "./constants/defaults";
 
 export class ColorHandler {
   app: App;
-  rgbConverter : RgbConverter;
+  colorUtils : ColorUtils;
   colorBar: StatusBar
 
   constructor(app : App, colorBar : StatusBar) {
     this.app = app;
     this.colorBar = colorBar;
 
-    this.rgbConverter = new RgbConverter();
+    this.colorUtils = new ColorUtils();
   }
 
   changeColor(colorMode = ColorMode.Normal) {
@@ -23,15 +23,16 @@ export class ColorHandler {
       const selection = editor.getSelection();
       const curCellColor = this.colorBar.getCurCellColor();
 
-      // If it is highlight mode and there is no selection, return
-      if(selection.length === 0 && colorMode === ColorMode.Highlight)
+      // If it is colored text mode and there is no selection, return
+      if(selection.length === 0 && colorMode === ColorMode.ColoredText)
         return;
 
       editor.replaceSelection(`<span style="color:${curCellColor}">${selection}</span>`);
       const cursorEnd = editor.getCursor("to");
 
       try {
-        editor.setCursor(cursorEnd.line, cursorEnd.ch + 1);
+        const cursorEndChar = selection.length === 0 ? cursorEnd.ch - 7 : cursorEnd.ch + 1;
+        editor.setCursor(cursorEnd.line, cursorEndChar);
       }
       catch (e) {
         // This code piece adds space to end of the doc if there is no space left

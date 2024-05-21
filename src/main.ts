@@ -36,6 +36,12 @@ export default class ColoredFont extends Plugin {
     const EditorExtensionClass = createEditorExtensionClass(this.colorHandler, this.colorBar);
     this.registerEditorExtension(ViewPlugin.fromClass(EditorExtensionClass));
 
+    // -------------------- Intervals -------------------- //
+    setInterval(() => {
+      this.curTheme = this.getCurrentTheme();
+      this.colorBar.refreshBorderColorOfCurrentCell();
+    }, 1000);
+
     // -------------------- Context Menu -------------------- //
     this.registerEvent(
       this.app.workspace.on("editor-menu", (menu: Menu, editor: Editor) => {
@@ -102,6 +108,8 @@ export default class ColoredFont extends Plugin {
   private getCurrentTheme() {
     // @ts-expect-error private
     let theme = this.app.getTheme();
+    console.log(theme);
+
     if (theme === 'moonstone') {
       theme = 'light';
     } else if (theme === 'obsidian') {
