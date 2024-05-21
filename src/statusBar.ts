@@ -78,8 +78,11 @@ export default class StatusBar {
       this.colorDivs.push(colorIcon);
     }
 
-    if(!this.hidePlugin)
+    if(!this.hidePlugin) {
       this.colorDivs[0].style.borderStyle = 'solid';
+      this.colorDivs[0].style.borderColor =
+        this.colorUtils.getContrastBorderColor(this.getCurCellColor(), plugin.curTheme);
+    }
   }
 
   addColoredTextMode(plugin: ColoredFont) {
@@ -130,6 +133,11 @@ export default class StatusBar {
       this.colorDivs[this.curIndex].style.borderColor =
         this.colorUtils.getContrastBorderColor(this.getCurCellColor(), this.plugin.curTheme);
     }
+  }
+
+  refreshBorderColorOfCurrentCell() {
+    this.colorDivs[this.curIndex].style.borderColor =
+      this.colorUtils.getContrastBorderColor(this.getCurCellColor(), this.plugin.curTheme);
   }
 
   changeCellColor(modalResult: string) {
