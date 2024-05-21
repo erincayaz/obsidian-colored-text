@@ -1,8 +1,17 @@
 import ColoredFont from "./main";
 import {setIcon} from "obsidian";
-import {IndexMode, MAX_CELL_COUNT} from "./constants/defaults";
+import {
+  COLORED_TEXT_MODE_HIGHLIGHTED_DARK,
+  COLORED_TEXT_MODE_HIGHLIGHTED_LIGHT,
+  IndexMode,
+  MAX_CELL_COUNT
+} from "./constants/defaults";
+import {ColorUtils} from "./colorUtils";
 
 export default class StatusBar {
+  private colorUtils : ColorUtils;
+  private plugin : ColoredFont;
+
   private coloredTextButton : HTMLElement;
   private colorDivs : HTMLDivElement[] = [];
 
@@ -11,11 +20,14 @@ export default class StatusBar {
 
   public curIndex : number;
   private prevIndex : number;
-  public highlightMode : boolean;
+  public coloredText : boolean;
 
   constructor(plugin: ColoredFont) {
+    this.colorUtils = new ColorUtils();
+    this.plugin = plugin;
+
     this.curIndex = 0;
-    this.highlightMode = false;
+    this.coloredText = false;
 
     this.cellCount = +plugin.colorsData.colorCellCount > MAX_CELL_COUNT ?
       MAX_CELL_COUNT : +plugin.colorsData.colorCellCount;
@@ -49,10 +61,10 @@ export default class StatusBar {
 
       statusBarColor.addClasses(["mod-clickable"]);
       statusBarColor.addEventListener("click", onClickColorBar(i));
-      
+
       const colorIcon = statusBarColor.createDiv(
         { 
-          cls: 'status-color',
+          cls: ['status-color'],
         }
       );
 
@@ -89,10 +101,15 @@ export default class StatusBar {
   }
 
   clickColoredText() {
-    this.highlightMode = !this.highlightMode;
+    this.coloredText = !this.coloredText;
 
-    if(!this.hidePlugin)
-      this.coloredTextButton.style.backgroundColor = this.highlightMode ? 'rgba(220, 220, 220, 0.3)' : 'rgba(220, 220, 220, 0)';
+    if(!this.hidePlugin) {
+      const coloredTextHighlightColor = this.plugin.curTheme === 'dark' ?
+        COLORED_TEXT_MODE_HIGHLIGHTED_DARK : COLORED_TEXT_MODE_HIGHLIGHTED_LIGHT;
+
+      this.coloredTextButton.style.backgroundColor = this.coloredText ?
+        coloredTextHighlightColor : 'rgba(220, 220, 220, 0)';
+    }
   }
 
   changeCurrentIndex(indexMode: IndexMode, newIndex = 0) {
@@ -108,7 +125,10 @@ export default class StatusBar {
 
     if(!this.hidePlugin) {
       this.colorDivs[this.prevIndex].style.borderStyle = 'none';
+
       this.colorDivs[this.curIndex].style.borderStyle = 'solid';
+      this.colorDivs[this.curIndex].style.borderColor =
+        this.colorUtils.getContrastBorderColor(this.getCurCellColor(), this.plugin.curTheme);
     }
   }
 
