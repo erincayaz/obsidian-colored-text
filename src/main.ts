@@ -108,7 +108,6 @@ export default class ColoredFont extends Plugin {
   private getCurrentTheme() {
     // @ts-expect-error private
     let theme = this.app.getTheme();
-    console.log(theme);
 
     if (theme === 'moonstone') {
       theme = 'light';
