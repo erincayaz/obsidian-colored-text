@@ -25,9 +25,9 @@ export class EditorExtension implements PluginValue {
   }
 
 	update(update: ViewUpdate) {
-		if(this.textFormatting.detectMarkdown(update)) {
-			this.textFormatting.updateEditor();
-		}
+    if(this.textFormatting.detectSandwichAsterisks(update)) {
+      this.textFormatting.addStylingToSandwichAsterisks(update);
+    }
 	}
 
   destroy() {
