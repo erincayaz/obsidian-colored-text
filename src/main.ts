@@ -142,22 +142,4 @@ export default class ColoredFont extends Plugin {
   async saveColorData() {
     await this.saveData(this.colorsData);
   }
-
-  handleEditorChange(instance: CodeMirror.Editor, changeObj: CodeMirror.EditorChange) {
-    // Get the current cursor position
-    const cursor = instance.getCursor();
-
-    // Get the line content
-    const line = instance.getLine(cursor.line);
-
-    // Example: Automatically bold text when user types "**" around a word
-    const boldRegex = /\*\*(.*?)\*\*/g;
-
-    if (boldRegex.test(line)) {
-      const newLine = line.replace(boldRegex, '<b>$1</b>');
-
-      // Replace the line with the modified text
-      instance.replaceRange(newLine, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: line.length });
-    }
-  }
 }
