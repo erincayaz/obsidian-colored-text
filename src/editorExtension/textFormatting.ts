@@ -81,7 +81,10 @@ export class TextFormatting {
     // Looks if added styling exists, if exists doesn't add it
     const selectedText = this.editorView.state.doc.slice(this.changes[0], this.changes[0] + this.changes[2]).sliceString(0);
     if(!selectedText.contains(this.shouldInsert)) {
-      editorChanges.push({ from: this.changes[0] + 13 + textLen, insert: styleText })
+      const searchedText = "<span style=\"";
+      const idx = selectedText.search(searchedText) + searchedText.length - textLen;
+
+      editorChanges.push({ from: this.changes[0] + idx + textLen, insert: styleText })
       anchorPos = this.changes[0] + this.changes[2] + styleText.length + 1;
     }
     // Remove styling of font if it is already added
