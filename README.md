@@ -27,7 +27,8 @@ I suggest using hotkeys for these commands as I designed this plugin with a keyb
 
 ## Demo
 
-![Colored Text Demo](https://github.com/erincayaz/obsidian-colored-text/blob/main/demo/DemoPlugin.gif)
+[![Watch the video](https://img.youtube.com/vi/BhB0Ax7HFM0/maxresdefault.jpg)](https://www.youtube.com/watch?v=BhB0Ax7HFM0&t=115s)
+This video is not mine, but thanks to Obsidian Tutorial for making a demo of this plugin
 
 ## Roadmap
 
