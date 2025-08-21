@@ -27,11 +27,23 @@ export class ColorHandler {
       if(selection.length === 0 && colorMode === ColorMode.ColoredText)
         return;
 
-      editor.replaceSelection(`<span style="color:${curCellColor}">${selection}</span>`);
+      // Handle italic and bold text
+      let newText = selection;
+      newText = newText
+        // Italic and Bold: ***text*** or ___text___ to <b><i> tags
+        .replace(/[\*\_]{3}(.+?)[\*\_]{3}/g, '<b><i>$1</i></b>')
+        // Bold: **text** or __text__ to <b> tag
+        .replace(/[\*\_]{2}(.+?)[\*\_]{2}/g, '<b>$1</b>')
+        // Italic: *text* or _text_ to <i> tag
+        .replace(/[\*\_](.+?)[\*\_]/g, '<i>$1</i>');
+      // New line: \n to <br> tag
+      newText = newText.replace(/\n/g, '<br>');
+
+      editor.replaceSelection(`<span style="color:${curCellColor}">${newText}</span>`);
       const cursorEnd = editor.getCursor("to");
 
       try {
-        const cursorEndChar = selection.length === 0 ? cursorEnd.ch - 7 : cursorEnd.ch + 1;
+        const cursorEndChar = newText.length === 0 ? cursorEnd.ch - 7 : cursorEnd.ch + 1;
         editor.setCursor(cursorEnd.line, cursorEndChar);
       }
       catch (e) {
