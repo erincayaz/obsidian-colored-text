@@ -9,7 +9,6 @@ import {createEditorExtensionClass} from "./editorExtension/editorExtension";
 import removeColor from './colorRemover';
 import {ViewPlugin} from "@codemirror/view";
 import {ColorHandler} from "./colorHandler";
-import CodeMirror from "codemirror";
 
 export default class ColoredFont extends Plugin {
   prevIndex: number;
