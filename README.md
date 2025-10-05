@@ -35,6 +35,7 @@ I've been maintaning it for about 2.5 years, and while it has reached a stable a
 The plugin will remain available and functional, and I’ll do my best to review critical bug reports or pull requests when possible.
 
 **Community contributions are welcome!**
+
 If you’d like to improve or extend the plugin (for example, by adding MathJax support or solving bullet point bug), feel free to open a PR or discussion.
 
 ### Areas for improvement
