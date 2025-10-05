@@ -30,6 +30,7 @@ This video is not mine, but thanks to Obsidian Tutorial for making a demo of thi
 
 ## Maintenance Notice
 **Note:** As of **October 2025**, this plugin has entered **maintenance mode**.
+
 I've been maintaning it for about 2.5 years, and while it has reached a stable and reliable state, I no longer have the motivation or time to continue active development.
 
 The plugin will remain available and functional, and I’ll do my best to review critical bug reports or pull requests when possible.
