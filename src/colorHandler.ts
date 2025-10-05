@@ -117,6 +117,10 @@ export class ColorHandler {
                 ...data,
                 text: newHtml,
               });
+
+              if (selection) {
+                try { selection.removeAllRanges(); } catch(e) { }
+              }
             }
           }
         }
