@@ -39,7 +39,7 @@ The plugin will remain available and functional, and I’ll do my best to review
 
 If you’d like to improve or extend the plugin (for example, by adding MathJax support or solving bullet point bug), feel free to open a PR or discussion.
 
-### Areas for improvement
+### Areas of improvement
 - [ ] Add LaTeX/MathJax color support
 - [ ] Fixing bullet point [bug](https://github.com/erincayaz/obsidian-colored-text/issues/45)
 - [ ] Making the plugin work properly for mobile devices
