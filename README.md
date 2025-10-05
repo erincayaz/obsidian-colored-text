@@ -2,8 +2,6 @@
 
 This is a plugin for [Obsidian](https://obsidian.md/) for adding colored texts to your notes.
 
-> This plugin is still in development. The features implemented and the way to use them are not final. Any suggestion regarding those is appreciated.
-
 ## Features
 
 - There are slots for storing colors which can be in the status bar. By default, the number of slots is set to 5, but it can be adjusted to any value between 1 and 20 in the settings.
@@ -30,14 +28,19 @@ I suggest using hotkeys for these commands as I designed this plugin with a keyb
 [![Watch the video](https://img.youtube.com/vi/BhB0Ax7HFM0/maxresdefault.jpg)](https://www.youtube.com/watch?v=BhB0Ax7HFM0&t=115s)
 This video is not mine, but thanks to Obsidian Tutorial for making a demo of this plugin
 
-## Roadmap
+## Maintenance Notice
+**Note:** As of **October 2025**, this plugin has entered **maintenance mode**.
+I've been maintaning it for about 2.5 years, and while it has reached a stable and reliable state, I no longer have the motivation or time to continue active development.
 
-- [x] Saving the condition of the status bar to use it after reopening the app 
-- [x] Adjusting the count of color cells in the status bar
-- [x] Ability to change color using right click
-- [x] Selecting favorite colors in the settings and ability to select from those
+The plugin will remain available and functional, and I’ll do my best to review critical bug reports or pull requests when possible.
 
-Help would be appriciated on these topics:
-- [ ] Bold/Italic fix
-- [ ] Latex/Mathjax Support will be added
-- [ ] Tests will be implemented
+**Community contributions are welcome!**
+If you’d like to improve or extend the plugin (for example, by adding MathJax support or solving bullet point bug), feel free to open a PR or discussion.
+
+### Areas for improvement
+- [ ] Add LaTeX/MathJax color support
+- [ ] Fixing bullet point [bug](https://github.com/erincayaz/obsidian-colored-text/issues/45)
+- [ ] Making the plugin work properly for mobile devices
+- [ ] Fixing coloring headings [bug](https://github.com/erincayaz/obsidian-colored-text/issues/35)
+- [ ] Further improvements can be made as can be seen [here](https://github.com/erincayaz/obsidian-colored-text/issues/43)
+- [ ] Coloring doesn't work for added cards that is referencing an existing note
