@@ -55,6 +55,17 @@ export class ColorHandler {
 
       // Handle italic and bold text
       let newText = selection;
+
+      // Check for list markers at the beginning of lines and preserve them
+      const listMarkerMatch = newText.match(/^(\s*([-*+]|\d+\.)\s+)/);
+      let listMarker = '';
+
+      if (listMarkerMatch) {
+        listMarker = listMarkerMatch[1];
+        // Remove the list marker temporarily to avoid it being caught by formatting regex
+        newText = newText.substring(listMarker.length);
+      }
+
       newText = newText
         // Italic and Bold: ***text*** or ___text___ to <b><i> tags
         .replace(/[\*\_]{3}(.+?)[\*\_]{3}/g, '<b><i>$1</i></b>')
@@ -62,6 +73,12 @@ export class ColorHandler {
         .replace(/[\*\_]{2}(.+?)[\*\_]{2}/g, '<b>$1</b>')
         // Italic: *text* or _text_ to <i> tag
         .replace(/[\*\_](.+?)[\*\_]/g, '<i>$1</i>');
+
+      // Restore the list marker
+      if (listMarker) {
+        newText = listMarker + newText;
+      }
+
       // New line: \n to <br> tag
       newText = newText.replace(/\n/g, '<br>');
 
